@@ -123,4 +123,102 @@ public class RegDAO implements Serializable {
         
         return check;
     }
+    public boolean addYard(RegYard yard) throws SQLException, NamingException{
+        boolean check = false;
+        System.out.println(yard.toString());
+        try{
+            //Connect to DB
+            con = DBHelpers.makeConnection();
+            
+//            //create sql String
+            if(con!=null){
+                String sql ="SET IDENTITY_INSERT Yard ON "
+                        + "Insert into Yard(Id, UserId, Name, Image, Address, DistrictId, DayPrice, NightPrice, DelFlag) "
+                        + "Values(?,?,?,'idk',?,?,?,?,0) "
+                        + "SET IDENTITY_INSERT Yard OFF";
+                // Create Statment & assign value to parameter.
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, yard.getYardID());
+                stm.setString(2, yard.getUserID());
+                stm.setString(3, yard.getYardName());
+                stm.setString(4, yard.getYardAddress());
+                stm.setString(5, yard.getYardDistrict());
+                stm.setInt(6, yard.getYardMoringPrice());
+                stm.setInt(7, yard.getYardNightPrice());
+                
+                check = stm.executeUpdate()>0;
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }finally{
+            CloseAll();
+        }
+        return check;
+    }
+    
+    public boolean update(RegYard yard) throws SQLException{
+        boolean check = false;
+        try{
+            con = DBHelpers.makeConnection();
+            if(con!=null){
+                String sql = "Upadte Yard "
+                        + "Set Address=?, DistrictId=?, DayPrice=?, NightPrice=? "
+                        + "Where Id=?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, yard.getYardAddress());
+                stm.setString(2, yard.getYardDistrict());
+                stm.setInt(3, yard.getYardMoringPrice());
+                stm.setInt(4, yard.getYardNightPrice());
+                check = stm.executeUpdate()>0;
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }finally{
+            CloseAll();
+        }
+        return check;
+    }
+    
+    public boolean CheckDuplicateYardID(int yardID) throws SQLException{
+        boolean check = false;
+        try{
+            con=DBHelpers.makeConnection();
+            String sql="Select Id "
+                    + "From Yard "
+                    + "Where Id = ? ";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, yardID);
+            rs = stm.executeQuery();
+            if(rs.next()){
+                check = true;
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }finally{
+            CloseAll();
+        }
+        
+        return check;
+    }
+    
+    public boolean deleteYard(int yardID)throws SQLException{
+        boolean check = false;
+        try{
+            con = DBHelpers.makeConnection();
+            if(con!=null){
+                String sql="Delete Yard "
+                        + "Where Id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, yardID);
+                int value = stm.executeUpdate();
+                check = value>0?true:false;
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }finally{
+            CloseAll();
+        }
+        return check;
+    }
 }
+

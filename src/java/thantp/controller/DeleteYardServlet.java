@@ -1,10 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package thantp.controller;
 
+import ThangTP.reg.RegDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -16,17 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Admin
+ * @author phuth
  */
-@WebServlet(name = "MainServlet", urlPatterns = {"/MainServlet"})
-public class MainServlet extends HttpServlet {
-    private final String LOGIN_PAGE = "login.jsp";
-    private final String LOGIN_CONTROLLER = "LoginServlet";
-    private final String LOGOUT_CONTROLLER = "LogoutServlet";
-    private final String REGISTER_CONTROLLER = "RegisterServlet";
-    private final String ADD_YARD_CONTROLLER = "AddYardServlet";
-    private final String UPDATE_YARD_CONTROLLER = "UpdateYardServlet";
-    private final String DELETE_YARD_CONTROLLER = "DeleteYardServlet";
+@WebServlet(name = "DeleteYardServlet", urlPatterns = {"/DeleteYardServlet"})
+public class DeleteYardServlet extends HttpServlet {
+private static final String DeleteError = "main.jsp";
+private static final String DeleteSuccess = "main.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,31 +34,21 @@ public class MainServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        //hệ điều hành hỏi ng dùng đã click nút j
-        String button = request.getParameter("BTACTION");
-        String url = LOGIN_PAGE;
-        PrintWriter out = response.getWriter();
-        try {
-           if(button == null){
-               //do nothing
-           } else if (button.equals("Login")){
-               url = LOGIN_CONTROLLER;
-           }  else if(button.equals("Add")){
-               url = ADD_YARD_CONTROLLER;
-           } else if(button.equals("Logout")){
-               url = LOGOUT_CONTROLLER;
-           }else if(button.equals("Register")){
-               url = REGISTER_CONTROLLER;
-           }else if(button.equals("Update")){
-               url = UPDATE_YARD_CONTROLLER;
-           }else if(button.equals("Delete")){
-               url =DELETE_YARD_CONTROLLER;
-           }
-        }finally {
-//            RequestDispatcher rd = request.getRequestDispatcher(url);
-//            rd.forward(request, response);
-              request.getRequestDispatcher(url).forward(request, response);
+         PrintWriter out = response.getWriter();
+         String url = DeleteError;
+        try{
+            int yardId = Integer.parseInt(request.getParameter("yardId"));
+            RegDAO dao = new RegDAO();
+            boolean check = dao.deleteYard(yardId);
+            if(check){
+                url = DeleteSuccess;
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }finally{
+             RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+            out.close();
         }
     }
 

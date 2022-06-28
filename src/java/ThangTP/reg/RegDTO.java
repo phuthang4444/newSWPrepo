@@ -114,7 +114,7 @@ public class RegDTO implements Serializable {
     /**
      * @return the role
      */
-    public int isRole() {
+    public int getRole() {
         return role;
     }
 

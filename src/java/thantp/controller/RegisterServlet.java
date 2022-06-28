@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "RegisterServlet", urlPatterns = {"/RegisterServlet"})
 public class RegisterServlet extends HttpServlet {
-    private final String LOGIN_PAGE = "login.html";
+    private final String LOGIN_PAGE = "login.jsp";
     private final String INVAILD_PAGE = "register.jsp";
 
     /**

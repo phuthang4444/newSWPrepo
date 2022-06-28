@@ -1,35 +1,30 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package thantp.controller;
 
-import ThangTP.Utils.DBHelpers;
 import ThangTP.reg.RegDAO;
-import ThangTP.reg.RegDTO;
-import ThangTP.reg.RegError;
+import ThangTP.reg.RegYard;
+import ThangTP.reg.RegYardError;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.SQLException;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Admin
+ * @author phuth
  */
-public class LoginServlet extends HttpServlet {
-
-    private final String INVAILD_PAGE = "login.jsp";
-    private final String MAIN_PAGE = "main.jsp";
-
+@WebServlet(name = "UpdateYardServlet", urlPatterns = {"/UpdateYardServlet"})
+public class UpdateYardServlet extends HttpServlet {
+private final String ADD_FAIL = "updateyard.jsp";
+private final String ADD_SUCCESS = "main.jsp";
+        
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,39 +38,46 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
-        String url = INVAILD_PAGE;
-
-        try {
-            String username = request.getParameter("USERNAME");
-            String password = request.getParameter("PASSWORD");
-            String phonenumber = request.getParameter("USERNAME");
-            RegError userError = new RegError();
-            //Call DAO method -> new DAO obj then call DAO obj
-            RegDAO dao = new RegDAO();
-            RegDTO dto = dao.chkLogin(username, phonenumber, password);
-            HttpSession session = request.getSession();
-            if (dto != null) {
-                session.setAttribute("LOGIN_USER", dto);
-                url = MAIN_PAGE;
-            } else {
-                userError.setErrorMess("Username or password is wrong !!!");
-                    request.setAttribute("USER_ERROR", userError);
+        String url = ADD_FAIL;
+        try{
+            int yardID = Integer.parseInt(request.getParameter("yardId"));
+            String yardUserID = request.getParameter("yardOwnerId");
+            String yardName = request.getParameter("yardName");
+            String yardAddress = request.getParameter("address");
+            String yardDistrict = request.getParameter("district");
+            int yardMorningPrice = Integer.parseInt(request.getParameter("updatePriceday"));
+            int yardNightPrice =Integer.parseInt( request.getParameter("updatePricenight"));
+            boolean check = true;
+            RegYardError yardError = new RegYardError();
+            if(check){
+                RegDAO dao = new RegDAO();
+                RegYard yard = new RegYard(yardID, yardUserID, yardName, "", yardAddress, yardDistrict, yardMorningPrice, yardNightPrice, false);
+              
+                boolean checkDup = dao.CheckDuplicateYardID(yardID);
+                if(checkDup){
+                    yardError.setYardIDError("Yard ID already existed !");
+                    request.setAttribute("YARD_ERROR", yardError);
+                }else{
+                    boolean checkAdd = dao.addYard(yard);
+                    if(checkAdd){
+                        request.setAttribute("YARD_INFO", yard);
+                        url = ADD_SUCCESS;
+                    }else{
+                        yardError.setYardMessError("Cannot add this yard!");
+                        request.setAttribute("YARD_ERROR", yardError);
+                    }
+                }
+            }else{
+                request.setAttribute("YARD_ERROR", yardError);
             }
-
-        } catch (SQLException ex) {
+        }catch(Exception ex){
             ex.printStackTrace();
-        } catch (NamingException ex) {
-            ex.printStackTrace();
-        } finally {
-            //do hiện đuôi ở tk " đầu bếp "
-            // response.sendRedirect(url);
+        }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
             out.close();
         }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
