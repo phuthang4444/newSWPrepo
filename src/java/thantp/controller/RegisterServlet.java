@@ -42,7 +42,7 @@ public class RegisterServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         String url = INVAILD_PAGE;
         try{
-        String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        String emailRegex = "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$";
         String phoneRegex = "^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$";
         String username = request.getParameter("registUserName");
         String password = request.getParameter("passWord");
