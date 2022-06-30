@@ -37,6 +37,7 @@ public class RegDAO implements Serializable {
             }
 }
 
+    //function checklogin
     public RegDTO chkLogin(String username, String PhoneNumber, String password) throws /*ClassNotFoundException*/ SQLException, NamingException {
         RegDTO dto = null;
         try {
@@ -72,7 +73,7 @@ public class RegDAO implements Serializable {
         return dto;
     }
     
-    
+    //function register account
     public boolean RegisterAccount(RegDTO user) throws SQLException, NamingException{
         boolean check = false;
         try{
@@ -102,6 +103,7 @@ public class RegDAO implements Serializable {
         return check;
     }
     
+    //function check duplicate id account
     public boolean CheckDuplicate(String username) throws SQLException{
         boolean check = false;
         try{
@@ -123,6 +125,8 @@ public class RegDAO implements Serializable {
         
         return check;
     }
+    
+    //function add yard
     public boolean addYard(RegYard yard) throws SQLException, NamingException{
         boolean check = false;
         System.out.println(yard.toString());
@@ -156,6 +160,7 @@ public class RegDAO implements Serializable {
         return check;
     }
     
+    //function update yard
     public boolean update(RegYard yard) throws SQLException{
         boolean check = false;
         try{
@@ -179,6 +184,7 @@ public class RegDAO implements Serializable {
         return check;
     }
     
+    //function check duplicate yard id
     public boolean CheckDuplicateYardID(int yardID) throws SQLException{
         boolean check = false;
         try{
@@ -201,6 +207,7 @@ public class RegDAO implements Serializable {
         return check;
     }
     
+    //function delete yard
     public boolean deleteYard(int yardID)throws SQLException{
         boolean check = false;
         try{
