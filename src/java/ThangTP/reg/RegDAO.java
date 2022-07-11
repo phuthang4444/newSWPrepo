@@ -227,5 +227,36 @@ public class RegDAO implements Serializable {
         }
         return check;
     }
+    
+    //function search all user booked for admin
+    public List<RegBooked> getListBooking(String search) throws SQLException{
+        List<RegBooked> list = new ArrayList<>();
+        try{
+            con = DBHelpers.makeConnection();
+            String sql = "Select Id, MiniYardId, UserId, FromTime, ToTime, Price, BookingDate, CreationDate, Status "
+                    + "From Booking "
+                    + "Where Id = ?";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, "%" +search +"%");
+            rs = stm.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt("Id");
+                int miniYardID = rs.getInt("MiniYardId");
+                String userID = rs.getString("UserId");
+                String fromTime = rs.getString("FromTime");
+                String toTime = rs.getString("ToTime");
+                float price = rs.getFloat("Price");
+                String bookingDate = rs.getString("BookingDate");
+                String creationDate = rs.getString("CreationDate");
+                int status = rs.getInt("Status");
+                list.add(new RegBooked(id, miniYardID, userID, fromTime, toTime, price, bookingDate, creationDate, status));
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }finally{
+            CloseAll();
+        }
+        return list;
+    }
 }
 

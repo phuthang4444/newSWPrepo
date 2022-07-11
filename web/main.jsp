@@ -60,7 +60,7 @@
                     </li>
 
                     <li>
-                        <a href="client-sannho.html">Sân đã đặt</a>
+                        <a href="bookedYard.jsp">Sân đã đặt</a>
                     </li>
                     <li>
                         <a href="addYard.jsp">Thêm sân</a>
@@ -100,7 +100,7 @@
                     </select>
                     <p>Ngày đặt</p>
                     <input type="date" id="date" name="dayChooser">
-                    <input type="submit" value="Tìm kiếm" class="search_btn">
+                     <input type="submit" value="Search" name="BTACTION" class="search_btn">
                 </form>
             </div>
         </div>
