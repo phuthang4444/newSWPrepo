@@ -9,101 +9,82 @@ package ThangTP.reg;
  * @author phuth
  */
 public class RegBooked {
-    private int id;
-    private int miniYardID;
-    private String userID;
-    private String fromTime;
-    private String toTime;
-    private float price;
-    private String bookingDate;
-    private String createDate;
-    private int status;
+    private String yardName;
+    private String userFullName;
+    private String yardBookedDate;
+    private String yardFromTime;
+    private String yardToTime;
+    private int yardPrice;
+    private String miniYardName;
 
     public RegBooked() {
     }
 
-    public RegBooked(int id, int miniYardID, String userID, String fromTime, String toTime, float price, String bookingDate, String createDate, int status) {
-        this.id = id;
-        this.miniYardID = miniYardID;
-        this.userID = userID;
-        this.fromTime = fromTime;
-        this.toTime = toTime;
-        this.price = price;
-        this.bookingDate = bookingDate;
-        this.createDate = createDate;
-        this.status = status;
+    public RegBooked(String yardName, String userFullName, String yardBookedDate, String yardFromTime, String yardToTime, int yardPrice, String miniYardName) {
+        this.yardName = yardName;
+        this.userFullName = userFullName;
+        this.yardBookedDate = yardBookedDate;
+        this.yardFromTime = yardFromTime;
+        this.yardToTime = yardToTime;
+        this.yardPrice = yardPrice;
+        this.miniYardName = miniYardName;
     }
 
-    public int getId() {
-        return id;
+   
+    public String getYardName() {
+        return yardName;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setYardName(String yardName) {
+        this.yardName = yardName;
     }
 
-    public int getMiniYardID() {
-        return miniYardID;
+    public String getUserFullName() {
+        return userFullName;
     }
 
-    public void setMiniYardID(int miniYardID) {
-        this.miniYardID = miniYardID;
+    public void setUserFullName(String userFullName) {
+        this.userFullName = userFullName;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getYardFromTime() {
+        return yardFromTime;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setYardFromTime(String yardFromTime) {
+        this.yardFromTime = yardFromTime;
     }
 
-    public String getFromTime() {
-        return fromTime;
+    public String getYardToTime() {
+        return yardToTime;
     }
 
-    public void setFromTime(String fromTime) {
-        this.fromTime = fromTime;
+    public void setYardToTime(String yardToTime) {
+        this.yardToTime = yardToTime;
     }
 
-    public String getToTime() {
-        return toTime;
+    public String getYardBookedDate() {
+        return yardBookedDate;
     }
 
-    public void setToTime(String toTime) {
-        this.toTime = toTime;
+    public void setYardBookedDate(String yardBookedDate) {
+        this.yardBookedDate = yardBookedDate;
     }
 
-    public float getPrice() {
-        return price;
+    public int getYardPrice() {
+        return yardPrice;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
+    public void setYardPrice(int yardPrice) {
+        this.yardPrice = yardPrice;
     }
 
-    public String getBookingDate() {
-        return bookingDate;
+    public String getMiniYardName() {
+        return miniYardName;
     }
 
-    public void setBookingDate(String bookingDate) {
-        this.bookingDate = bookingDate;
-    }
-
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
+    public void setMiniYardName(String miniYardName) {
+        this.miniYardName = miniYardName;
     }
     
     

@@ -20,22 +20,22 @@ import javax.naming.NamingException;
  * @author Admin
  */
 public class RegDAO implements Serializable {
-       private Connection con = null;
-       private PreparedStatement stm = null;
-       private ResultSet rs = null;
-       
-       
-    public void CloseAll() throws SQLException{
-    if (con != null) {
-                con.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-            if (rs != null) {
-                rs.close();
-            }
-}
+
+    private Connection con = null;
+    private PreparedStatement stm = null;
+    private ResultSet rs = null;
+
+    public void CloseAll() throws SQLException {
+        if (con != null) {
+            con.close();
+        }
+        if (stm != null) {
+            stm.close();
+        }
+        if (rs != null) {
+            rs.close();
+        }
+    }
 
     //function checklogin
     public RegDTO chkLogin(String username, String PhoneNumber, String password) throws /*ClassNotFoundException*/ SQLException, NamingException {
@@ -45,9 +45,9 @@ public class RegDAO implements Serializable {
             con = DBHelpers.makeConnection();
             if (con != null) {
                 //2. Create SQL statement String
-                String sql = "Select Name, RoleId, Image, Email, DelFlag, PhoneNumber " +
-                              "From [User] " +
-                              "Where Id= ? And Password = ?";
+                String sql = "Select Name, RoleId, Image, Email, DelFlag, PhoneNumber "
+                        + "From [User] "
+                        + "Where Id= ? And Password = ?";
 
                 //3. create statement obj
                 stm = con.prepareStatement(sql);
@@ -64,7 +64,7 @@ public class RegDAO implements Serializable {
                     int role = rs.getInt("RoleId");
                     boolean delFlag = rs.getBoolean("DelFlag");
                     dto = new RegDTO(username, password, fullname, image, email, phoneNumber, role, delFlag);
-                    
+
                 }
             }//end connenection
         } finally {
@@ -72,16 +72,16 @@ public class RegDAO implements Serializable {
         }
         return dto;
     }
-    
+
     //function register account
-    public boolean RegisterAccount(RegDTO user) throws SQLException, NamingException{
+    public boolean RegisterAccount(RegDTO user) throws SQLException, NamingException {
         boolean check = false;
-        try{
+        try {
             //Connect to DB
             con = DBHelpers.makeConnection();
-            
+
 //            //create sql String
-            if(con!=null){
+            if (con != null) {
                 String sql = "Insert into [User](Id, Password, Name, Image, Email, PhoneNumber, RoleId, DelFlag)"
                         + " Values(?,?,?,null,?,?,1,0)";
                 // Create Statment & assign value to parameter.
@@ -92,51 +92,51 @@ public class RegDAO implements Serializable {
                 stm.setString(3, user.getFullname());
                 stm.setString(4, user.getEmail());
                 stm.setString(5, user.getPhoneNumber());
-                
-                check = stm.executeUpdate()>0;
+
+                check = stm.executeUpdate() > 0;
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
-        }finally{
+        } finally {
             CloseAll();
         }
         return check;
     }
-    
+
     //function check duplicate id account
-    public boolean CheckDuplicate(String username) throws SQLException{
+    public boolean CheckDuplicate(String username) throws SQLException {
         boolean check = false;
-        try{
-            con=DBHelpers.makeConnection();
-            String sql="Select Id "
+        try {
+            con = DBHelpers.makeConnection();
+            String sql = "Select Id "
                     + "From [User] "
                     + "Where Id = ? ";
             stm = con.prepareStatement(sql);
             stm.setString(1, username);
             rs = stm.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 check = true;
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
-        }finally{
+        } finally {
             CloseAll();
         }
-        
+
         return check;
     }
-    
+
     //function add yard
-    public boolean addYard(RegYard yard) throws SQLException, NamingException{
+    public boolean addYard(RegYard yard) throws SQLException, NamingException {
         boolean check = false;
         System.out.println(yard.toString());
-        try{
+        try {
             //Connect to DB
             con = DBHelpers.makeConnection();
-            
+
 //            //create sql String
-            if(con!=null){
-                String sql ="SET IDENTITY_INSERT Yard ON "
+            if (con != null) {
+                String sql = "SET IDENTITY_INSERT Yard ON "
                         + "Insert into Yard(Id, UserId, Name, Image, Address, DistrictId, DayPrice, NightPrice, DelFlag) "
                         + "Values(?,?,?,'idk',?,?,?,?,0) "
                         + "SET IDENTITY_INSERT Yard OFF";
@@ -149,23 +149,23 @@ public class RegDAO implements Serializable {
                 stm.setString(5, yard.getYardDistrict());
                 stm.setInt(6, yard.getYardMoringPrice());
                 stm.setInt(7, yard.getYardNightPrice());
-                
-                check = stm.executeUpdate()>0;
+
+                check = stm.executeUpdate() > 0;
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
-        }finally{
+        } finally {
             CloseAll();
         }
         return check;
     }
-    
+
     //function update yard
-    public boolean update(RegYard yard) throws SQLException{
+    public boolean update(RegYard yard) throws SQLException {
         boolean check = false;
-        try{
+        try {
             con = DBHelpers.makeConnection();
-            if(con!=null){
+            if (con != null) {
                 String sql = "Upadte Yard "
                         + "Set Address=?, DistrictId=?, DayPrice=?, NightPrice=? "
                         + "Where Id=?";
@@ -174,89 +174,118 @@ public class RegDAO implements Serializable {
                 stm.setString(2, yard.getYardDistrict());
                 stm.setInt(3, yard.getYardMoringPrice());
                 stm.setInt(4, yard.getYardNightPrice());
-                check = stm.executeUpdate()>0;
+                check = stm.executeUpdate() > 0;
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
-        }finally{
+        } finally {
             CloseAll();
         }
         return check;
     }
-    
+
     //function check duplicate yard id
-    public boolean CheckDuplicateYardID(int yardID) throws SQLException{
+    public boolean CheckDuplicateYardID(int yardID) throws SQLException {
         boolean check = false;
-        try{
-            con=DBHelpers.makeConnection();
-            String sql="Select Id "
+        try {
+            con = DBHelpers.makeConnection();
+            String sql = "Select Id "
                     + "From Yard "
                     + "Where Id = ? ";
             stm = con.prepareStatement(sql);
             stm.setInt(1, yardID);
             rs = stm.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 check = true;
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
-        }finally{
+        } finally {
             CloseAll();
         }
-        
+
         return check;
     }
-    
+
     //function delete yard
-    public boolean deleteYard(int yardID)throws SQLException{
+    public boolean deleteYard(int yardID) throws SQLException {
         boolean check = false;
-        try{
+        try {
             con = DBHelpers.makeConnection();
-            if(con!=null){
-                String sql="Delete Yard "
+            if (con != null) {
+                String sql = "Delete Yard "
                         + "Where Id = ?";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, yardID);
                 int value = stm.executeUpdate();
-                check = value>0?true:false;
+                check = value > 0 ? true : false;
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
-        }finally{
+        } finally {
             CloseAll();
         }
         return check;
     }
-    
+
     //function search all user booked for admin
-    public List<RegBooked> getListBooking(String search) throws SQLException{
+    public List<RegBooked> getListBooking(String search) throws SQLException {
         List<RegBooked> list = new ArrayList<>();
-        try{
+        try {
             con = DBHelpers.makeConnection();
-            String sql = "Select Id, MiniYardId, UserId, FromTime, ToTime, Price, BookingDate, CreationDate, Status "
+            String sql = "Select Yard.Name, [User].Name, Booking.BookingDate, Booking.FromTime, Booking.ToTime, Booking.Price, MiniYard.Name "
                     + "From Booking "
-                    + "Where Id = ?";
+                    + "INNER JOIN MiniYard ON Booking.MiniYardId = MiniYard.Id "
+                    + "INNER JOIN YARD ON MiniYard.YardId = Yard.Id "
+                    + "INNER JOIN [User] ON Booking.UserId  = [User].Id";
             stm = con.prepareStatement(sql);
-            stm.setString(1, "%" +search +"%");
+            stm.setString(1, search);
             rs = stm.executeQuery();
-            while(rs.next()){
-                int id = rs.getInt("Id");
-                int miniYardID = rs.getInt("MiniYardId");
-                String userID = rs.getString("UserId");
-                String fromTime = rs.getString("FromTime");
-                String toTime = rs.getString("ToTime");
-                float price = rs.getFloat("Price");
-                String bookingDate = rs.getString("BookingDate");
-                String creationDate = rs.getString("CreationDate");
-                int status = rs.getInt("Status");
-                list.add(new RegBooked(id, miniYardID, userID, fromTime, toTime, price, bookingDate, creationDate, status));
+            while (rs.next()) {
+                String yardName = rs.getString("Yard.Name");
+                String userFullName = rs.getString("[User].Name");
+                String bookingDate = rs.getString("Booking.BookingDate");
+                String fromTime = rs.getString("Booking.FromTime");
+                String toTime = rs.getString("Booking.ToTime");
+                int price = rs.getInt("Booking.Price");
+                String miniYardName = rs.getString("MiniYard.Name");
+                list.add(new RegBooked(yardName, userFullName, bookingDate, fromTime, toTime, price, miniYardName));
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
-        }finally{
+        } finally {
             CloseAll();
         }
         return list;
     }
-}
+    
+     public List<RegBooked> getAllListBooking() throws SQLException {
+         List<RegBooked> list = new ArrayList<>();
+        try {
+            con = DBHelpers.makeConnection();
+            String sql = "Select Yard.YardName, [User].Name, Booking.BookingDate, Booking.FromTime, Booking.ToTime, Booking.Price, MiniYard.MiniYardName "
+                    + "From Booking "
+                    + "INNER JOIN MiniYard ON Booking.MiniYardId = MiniYard.Id "
+                    + "INNER JOIN YARD ON MiniYard.YardId = Yard.Id "
+                    + "INNER JOIN [User] ON Booking.UserId  = [User].Id";
+            stm = con.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String yardName = rs.getString("YardName");
+                String userFullName = rs.getString("Name");
+                String bookingDate = rs.getString("BookingDate");
+                String fromTime = rs.getString("FromTime");
+                String toTime = rs.getString("ToTime");
+                int price = rs.getInt("Price");
+                String miniYardName = rs.getString("MiniYardName");
+                list.add(new RegBooked(yardName, userFullName, bookingDate, fromTime, toTime, price, miniYardName));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            CloseAll();
+        }
+        return list;
+    }
 
+}
