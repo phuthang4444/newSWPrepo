@@ -71,36 +71,47 @@
         <div id="search_section">
             <div class="search_container">
                 <form class="search_form" action="MainServlet" method="POST">
-                    <p>Địa điểm</p>
-                    <select name="searchLocation" id="location">
-                        <option value="1">Quận 1</option>
-                        <option value="2">Quận 2</option>
-                        <option value="3">Quận 3</option>
-                        <option value="4">Quận 4</option>
-                        <option value="5">Quận 5</option>
-                        <option value="6">Quận 6</option>
-                        <option value="7">Quận 7</option>
-                        <option value="8">Quận 8</option>
-                        <option value="9">Quận 9</option>
-                        <option value="10">Quận 10</option>
-                        <option value="11">Quận 11</option>
-                        <option value="12">Quận 12</option>
-                        <option value="13">Quận Bình Thạnh</option>
-                        <option value="14">Thành phố Thủ Đức</option>
-                        <option value="15">Quận Bình Tân</option>
-                        <option value="16">Quận Tân Bình</option>
-                        <option value="17">Quận Tân Phú</option>
-                        <option value="18">Quận Phú Nhuận</option>
-                        <option value="19">Quận Gò Vấp</option>
-                        <option value="20">Huyện Cần Giờ</option>
-                        <option value="21">Huyện Củ Chi</option>
-                        <option value="22">Huyện Nhà Bè</option>
-                        <option value="23">Huyện Hóc Môn</option>
-                        <option value="24">Huyện Bình Chánh</option>
-                    </select>
-                    <p>Ngày đặt</p>
-                    <input type="date" id="date" name="dayChooser">
-                     <input type="submit" value="Search" name="BTACTION" class="search_btn">
+                    <p>Tên Sân</p>
+                    <input type="text" id="date" name="dayChooser">
+                    <input type="submit" value="Search" name="BTACTION" class="search_btn">
+                    <c:if test="${requestScope.LIST_YARD!=null}" >
+                        <c:if test="${not empty requestScope.LIST_YARD}">
+                            <table border="1">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Sân</th>
+                                        <th>Chủ sân</th>
+                                        <th>Địa chỉ</th>
+                                        <th>Giá buổi sáng</th>
+                                        <th>Giá buổi chiều - tối</th>
+                                            <c:if test="${sessionScope.LOGIN_USER.role==1}">
+                                            <th>Đặt Sân</th>
+                                            </c:if>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="dto" varStatus="counter" items="${requestScope.LIST_YARD}">
+                                        <tr>
+                                            <td>${counter.count}</td>
+                                            <td>${dto.yardName}</td>
+                                            <td>${dto.userFullName}</td>
+                                            <td>${dto.yardAddress}</td>
+                                            <td>${dto.yardDayPrice}đ</td>
+                                            <td>${dto.yardNightprice}đ</td>
+                                            <c:if test="${sessionScope.LOGIN_USER.role==1}">
+                                                <td><input type="submit" value="Booking" name="BTACTION" class="search_btn"></td>
+                                                </c:if>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </c:if>
+                        <c:if test="${empty requestScope.LIST_BOOKED_YARD}">
+                            No Record Found!
+                        </c:if>
+                    </c:if>
                 </form>
             </div>
         </div>

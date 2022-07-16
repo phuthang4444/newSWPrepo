@@ -28,6 +28,7 @@ public class MainServlet extends HttpServlet {
     private final String UPDATE_YARD_CONTROLLER = "UpdateYardServlet";
     private final String DELETE_YARD_CONTROLLER = "DeleteYardServlet";
     private final String SEARCH_BOOKED_YARD_CONTROLLER = "SearchBookedYardServlet";
+    private final String BOOKED_YARD_CONTROLLER = "BookedYardServlet";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -62,6 +63,8 @@ public class MainServlet extends HttpServlet {
                url =DELETE_YARD_CONTROLLER;
            }else if(button.equals("Search")){
                url =SEARCH_BOOKED_YARD_CONTROLLER;
+           }else if(button.equals("Booking")){
+               url =BOOKED_YARD_CONTROLLER;
            }
         }finally {
 //            RequestDispatcher rd = request.getRequestDispatcher(url);

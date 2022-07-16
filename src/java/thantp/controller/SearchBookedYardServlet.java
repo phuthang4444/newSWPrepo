@@ -4,8 +4,8 @@
  */
 package thantp.controller;
 
-import ThangTP.reg.RegBooked;
 import ThangTP.reg.RegDAO;
+import ThangTP.reg.RegYard;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -22,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "SearchBookedYardServlet", urlPatterns = {"/SearchBookedYardServlet"})
 public class SearchBookedYardServlet extends HttpServlet {
-private final String Error = "main.jsp";
-private final String Success = "bookedYard.jsp";
+private final String Error = "login.jsp";
+private final String Success = "main.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,19 +41,24 @@ private final String Success = "bookedYard.jsp";
         try {
             String search = request.getParameter("yardName");
             RegDAO dao = new RegDAO();
-            if(search==null){
-                List<RegBooked> list = dao.getAllListBooking();
-               if(!list.isEmpty()){
-                request.setAttribute("LIST_BOOKED_YARD", list);
+            List<RegYard> list = dao.searchYardByName(search);
+            if(!list.isEmpty()){
+                request.setAttribute("LIST_YARD", list);
                 url = Success;
-               } 
+            }
+//            if(search==null){
+//                List<RegBooked> list = dao.getAllListBooking();
+//               if(!list.isEmpty()){
+//                request.setAttribute("LIST_BOOKED_YARD", list);
+//                url = Success;
+//               } 
 //            }else{
 //            List<RegBooked> list = dao.getListBooking(search);
 //            if(!list.isEmpty()){
 //                request.setAttribute("LIST_BOOKED_YARD", list);
 //                url = Success;
 //            }
-            }
+//            }
         }catch(Exception ex){
             ex.printStackTrace();
         }finally{

@@ -12,29 +12,23 @@ import java.io.Serializable;
  */
 public class RegYard implements Serializable {
 
-    private int yardID;
-    private String userID;
-    private String yardName;
-    private String yardImage;
-    private String yardAddress;
-    private String yardDistrict;
-    private int yardMoringPrice;
-    private int yardNightPrice;
-    private boolean yardDelflag;
+   private String yardImage;
+   private String yardName;
+   private String userFullName;
+   private String yardAddress;
+   private String yardDayPrice;
+   private String yardNightprice;
 
     public RegYard() {
     }
 
-    public RegYard(int yardID, String userID, String yardName, String yardImage, String yardAddress, String yardDistrict, int yardMoringPrice, int yardNightPrice, boolean yardDelflag) {
-        this.yardID = yardID;
-        this.userID = userID;
-        this.yardName = yardName;
+    public RegYard(String yardImage, String yardName, String userFullName, String yardAddress, String yardDayPrice, String yardNightprice) {
         this.yardImage = yardImage;
+        this.yardName = yardName;
+        this.userFullName = userFullName;
         this.yardAddress = yardAddress;
-        this.yardDistrict = yardDistrict;
-        this.yardMoringPrice = yardMoringPrice;
-        this.yardNightPrice = yardNightPrice;
-        this.yardDelflag = yardDelflag;
+        this.yardDayPrice = yardDayPrice;
+        this.yardNightprice = yardNightprice;
     }
 
     public String getYardImage() {
@@ -45,20 +39,20 @@ public class RegYard implements Serializable {
         this.yardImage = yardImage;
     }
 
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-
     public String getYardName() {
         return yardName;
     }
 
     public void setYardName(String yardName) {
         this.yardName = yardName;
+    }
+
+    public String getUserFullName() {
+        return userFullName;
+    }
+
+    public void setUserFullName(String userFullName) {
+        this.userFullName = userFullName;
     }
 
     public String getYardAddress() {
@@ -69,50 +63,22 @@ public class RegYard implements Serializable {
         this.yardAddress = yardAddress;
     }
 
-    public String getYardDistrict() {
-        return yardDistrict;
+    public String getYardDayPrice() {
+        return yardDayPrice;
     }
 
-    public void setYardDistrict(String yardDistrict) {
-        this.yardDistrict = yardDistrict;
+    public void setYardDayPrice(String yardDayPrice) {
+        this.yardDayPrice = yardDayPrice;
     }
 
-    public boolean isYardDelflag() {
-        return yardDelflag;
+    public String getYardNightprice() {
+        return yardNightprice;
     }
 
-    public void setYardDelflag(boolean yardDelflag) {
-        this.yardDelflag = yardDelflag;
+    public void setYardNightprice(String yardNightprice) {
+        this.yardNightprice = yardNightprice;
     }
 
-    public int getYardID() {
-        return yardID;
-    }
-
-    public void setYardID(int yardID) {
-        this.yardID = yardID;
-    }
-
-    public int getYardMoringPrice() {
-        return yardMoringPrice;
-    }
-
-    public void setYardMoringPrice(int yardMoringPrice) {
-        this.yardMoringPrice = yardMoringPrice;
-    }
-
-    public int getYardNightPrice() {
-        return yardNightPrice;
-    }
-
-    public void setYardNightPrice(int yardNightPrice) {
-        this.yardNightPrice = yardNightPrice;
-    }
-
-    @Override
-    public String toString() {
-        return "RegYard{" + "yardID=" + yardID + ", userID=" + userID + ", yardName=" + yardName + ", yardImage=" + yardImage + ", yardAddress=" + yardAddress + ", yardDistrict=" + yardDistrict + ", yardMoringPrice=" + yardMoringPrice + ", yardNightPrice=" + yardNightPrice + ", yardDelflag=" + yardDelflag + '}';
-    }
-
+    
     
 }

@@ -3,5 +3,5 @@
     <Resource name="JackCypher" type="javax.sql.DataSource" auth="Container" 
               driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" 
               url="jdbc:sqlserver://localhost:1433;databaseName=master" 
-              username="admin" password="123456"/>
+              username="admin" password="1234567890"/>
 </Context>

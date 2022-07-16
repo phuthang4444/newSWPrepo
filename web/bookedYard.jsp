@@ -94,9 +94,9 @@
                                         <td>${counter.count}</td>
                                         <td>${dto.yardName}</td>
                                         <td>${dto.userFullName}</td>
-                                        <td>${dto.yardFromTime} - ${dto.yardToTime}</td>
+                                        <td>${dto.yardFromTime}h - ${dto.yardToTime}h</td>
                                         <td>${dto.yardBookedDate}</td>
-                                        <td>${dto.yardPrice}</td>
+                                        <td>${dto.yardPrice}đ</td>
                                         <td>${dto.miniYardName}</td>
                                     </tr>
                                     </c:forEach>

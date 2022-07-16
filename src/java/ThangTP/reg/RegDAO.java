@@ -127,63 +127,6 @@ public class RegDAO implements Serializable {
     }
 
     //function add yard
-    public boolean addYard(RegYard yard) throws SQLException, NamingException {
-        boolean check = false;
-        System.out.println(yard.toString());
-        try {
-            //Connect to DB
-            con = DBHelpers.makeConnection();
-
-//            //create sql String
-            if (con != null) {
-                String sql = "SET IDENTITY_INSERT Yard ON "
-                        + "Insert into Yard(Id, UserId, Name, Image, Address, DistrictId, DayPrice, NightPrice, DelFlag) "
-                        + "Values(?,?,?,'idk',?,?,?,?,0) "
-                        + "SET IDENTITY_INSERT Yard OFF";
-                // Create Statment & assign value to parameter.
-                stm = con.prepareStatement(sql);
-                stm.setInt(1, yard.getYardID());
-                stm.setString(2, yard.getUserID());
-                stm.setString(3, yard.getYardName());
-                stm.setString(4, yard.getYardAddress());
-                stm.setString(5, yard.getYardDistrict());
-                stm.setInt(6, yard.getYardMoringPrice());
-                stm.setInt(7, yard.getYardNightPrice());
-
-                check = stm.executeUpdate() > 0;
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            CloseAll();
-        }
-        return check;
-    }
-
-    //function update yard
-    public boolean update(RegYard yard) throws SQLException {
-        boolean check = false;
-        try {
-            con = DBHelpers.makeConnection();
-            if (con != null) {
-                String sql = "Upadte Yard "
-                        + "Set Address=?, DistrictId=?, DayPrice=?, NightPrice=? "
-                        + "Where Id=?";
-                stm = con.prepareStatement(sql);
-                stm.setString(1, yard.getYardAddress());
-                stm.setString(2, yard.getYardDistrict());
-                stm.setInt(3, yard.getYardMoringPrice());
-                stm.setInt(4, yard.getYardNightPrice());
-                check = stm.executeUpdate() > 0;
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            CloseAll();
-        }
-        return check;
-    }
-
     //function check duplicate yard id
     public boolean CheckDuplicateYardID(int yardID) throws SQLException {
         boolean check = false;
@@ -228,60 +171,28 @@ public class RegDAO implements Serializable {
         return check;
     }
 
-    //function search all user booked for admin
-    public List<RegBooked> getListBooking(String search) throws SQLException {
-        List<RegBooked> list = new ArrayList<>();
+    public List<RegYard> searchYardByName(String search) throws SQLException {
+        List<RegYard> list = new ArrayList<>();
         try {
             con = DBHelpers.makeConnection();
-            String sql = "Select Yard.Name, [User].Name, Booking.BookingDate, Booking.FromTime, Booking.ToTime, Booking.Price, MiniYard.Name "
-                    + "From Booking "
-                    + "INNER JOIN MiniYard ON Booking.MiniYardId = MiniYard.Id "
-                    + "INNER JOIN YARD ON MiniYard.YardId = Yard.Id "
-                    + "INNER JOIN [User] ON Booking.UserId  = [User].Id";
+            String sql = "Select YardImage, YardName, [User].Name, Address, NightPrice, DayPrice "
+                    + "From Yard "
+                    + "INNER JOIN [User] ON Yard.UserId  = [User].Id "
+                    + "Where YardName like ?";
             stm = con.prepareStatement(sql);
             stm.setString(1, search);
             rs = stm.executeQuery();
             while (rs.next()) {
-                String yardName = rs.getString("Yard.Name");
-                String userFullName = rs.getString("[User].Name");
-                String bookingDate = rs.getString("Booking.BookingDate");
-                String fromTime = rs.getString("Booking.FromTime");
-                String toTime = rs.getString("Booking.ToTime");
-                int price = rs.getInt("Booking.Price");
-                String miniYardName = rs.getString("MiniYard.Name");
-                list.add(new RegBooked(yardName, userFullName, bookingDate, fromTime, toTime, price, miniYardName));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            CloseAll();
-        }
-        return list;
-    }
-    
-     public List<RegBooked> getAllListBooking() throws SQLException {
-         List<RegBooked> list = new ArrayList<>();
-        try {
-            con = DBHelpers.makeConnection();
-            String sql = "Select Yard.YardName, [User].Name, Booking.BookingDate, Booking.FromTime, Booking.ToTime, Booking.Price, MiniYard.MiniYardName "
-                    + "From Booking "
-                    + "INNER JOIN MiniYard ON Booking.MiniYardId = MiniYard.Id "
-                    + "INNER JOIN YARD ON MiniYard.YardId = Yard.Id "
-                    + "INNER JOIN [User] ON Booking.UserId  = [User].Id";
-            stm = con.prepareStatement(sql);
-            rs = stm.executeQuery();
-            while (rs.next()) {
                 String yardName = rs.getString("YardName");
+                String yardImage = rs.getString("YardImage");
                 String userFullName = rs.getString("Name");
-                String bookingDate = rs.getString("BookingDate");
-                String fromTime = rs.getString("FromTime");
-                String toTime = rs.getString("ToTime");
-                int price = rs.getInt("Price");
-                String miniYardName = rs.getString("MiniYardName");
-                list.add(new RegBooked(yardName, userFullName, bookingDate, fromTime, toTime, price, miniYardName));
+                String yardAddress = rs.getString("Address");
+                int yardDayPrice = rs.getInt("DayPrice");
+                int yardNightPrice = rs.getInt("NightPrice");
+                list.add(new RegYard(yardImage, yardName, userFullName, yardAddress, yardAddress, yardImage));
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+
         } finally {
             CloseAll();
         }

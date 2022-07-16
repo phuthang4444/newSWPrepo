@@ -40,36 +40,36 @@ private final String ADD_SUCCESS = "main.jsp";
         PrintWriter out = response.getWriter();
         String url = ADD_FAIL;
         try{
-            int yardID = Integer.parseInt(request.getParameter("yardId"));
-            String yardUserID = request.getParameter("yardOwnerId");
-            String yardName = request.getParameter("yardName");
-            String yardAddress = request.getParameter("address");
-            String yardDistrict = request.getParameter("district");
-            int yardMorningPrice = Integer.parseInt(request.getParameter("updatePriceday"));
-            int yardNightPrice =Integer.parseInt( request.getParameter("updatePricenight"));
-            boolean check = true;
-            RegYardError yardError = new RegYardError();
-            if(check){
-                RegDAO dao = new RegDAO();
-                RegYard yard = new RegYard(yardID, yardUserID, yardName, "", yardAddress, yardDistrict, yardMorningPrice, yardNightPrice, false);
-              
-                boolean checkDup = dao.CheckDuplicateYardID(yardID);
-                if(checkDup){
-                    yardError.setYardIDError("Yard ID already existed !");
-                    request.setAttribute("YARD_ERROR", yardError);
-                }else{
-                    boolean checkAdd = dao.addYard(yard);
-                    if(checkAdd){
-                        request.setAttribute("YARD_INFO", yard);
-                        url = ADD_SUCCESS;
-                    }else{
-                        yardError.setYardMessError("Cannot add this yard!");
-                        request.setAttribute("YARD_ERROR", yardError);
-                    }
-                }
-            }else{
-                request.setAttribute("YARD_ERROR", yardError);
-            }
+//            int yardID = Integer.parseInt(request.getParameter("yardId"));
+//            String yardUserID = request.getParameter("yardOwnerId");
+//            String yardName = request.getParameter("yardName");
+//            String yardAddress = request.getParameter("address");
+//            String yardDistrict = request.getParameter("district");
+//            int yardMorningPrice = Integer.parseInt(request.getParameter("updatePriceday"));
+//            int yardNightPrice =Integer.parseInt( request.getParameter("updatePricenight"));
+//            boolean check = true;
+//            RegYardError yardError = new RegYardError();
+//            if(check){
+//                RegDAO dao = new RegDAO();
+//                RegYard yard = new RegYard(yardID, yardUserID, yardName, "", yardAddress, yardDistrict, yardMorningPrice, yardNightPrice, false);
+//              
+//                boolean checkDup = dao.CheckDuplicateYardID(yardID);
+//                if(checkDup){
+//                    yardError.setYardIDError("Yard ID already existed !");
+//                    request.setAttribute("YARD_ERROR", yardError);
+//                }else{
+//                    boolean checkAdd = dao.addYard(yard);
+//                    if(checkAdd){
+//                        request.setAttribute("YARD_INFO", yard);
+//                        url = ADD_SUCCESS;
+//                    }else{
+//                        yardError.setYardMessError("Cannot add this yard!");
+//                        request.setAttribute("YARD_ERROR", yardError);
+//                    }
+//                }
+//            }else{
+//                request.setAttribute("YARD_ERROR", yardError);
+//            }
         }catch(Exception ex){
             ex.printStackTrace();
         }finally{

@@ -4,12 +4,8 @@
  */
 package thantp.controller;
 
-import ThangTP.reg.RegDAO;
-import ThangTP.reg.RegYard;
-import ThangTP.reg.RegYardError;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,11 +16,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author phuth
  */
-@WebServlet(name = "AddYardServlet", urlPatterns = {"/AddYardServlet"})
-public class AddYardServlet extends HttpServlet {
-private final String ADD_FAIL = "addYard.jsp";
-private final String ADD_SUCCESS = "main.jsp";
-        
+@WebServlet(name = "BookedYardServlet", urlPatterns = {"/BookedYardServlet"})
+public class BookedYardServlet extends HttpServlet {
+private final String Error = "main.jsp";
+private final String Success = "bookingYard.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,42 +33,13 @@ private final String ADD_SUCCESS = "main.jsp";
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = ADD_FAIL;
-        try{
-//            int yardID = Integer.parseInt(request.getParameter("yardId"));
-//            String yardUserID = request.getParameter("yardOwnerId");
-//            String yardName = request.getParameter("yardName");
-//            String yardAddress = request.getParameter("address");
-//            String yardDistrict = request.getParameter("district");
-//            int yardMorningPrice = Integer.parseInt(request.getParameter("updatePriceday"));
-//            int yardNightPrice =Integer.parseInt( request.getParameter("updatePricenight"));
-//            boolean check = true;
-//            RegYardError yardError = new RegYardError();
-//            if(check){
-//                RegDAO dao = new RegDAO();
-//                RegYard yard = new RegYard(yardID, yardUserID, yardName, "", yardAddress, yardDistrict, yardMorningPrice, yardNightPrice, false);
-//              boolean checkDup = dao.CheckDuplicateYardID(yardID);
-//                if(checkDup){
-//                    yardError.setYardIDError("Yard ID already existed !");
-//                    request.setAttribute("YARD_ERROR", yardError);
-//                }else{
-//                    boolean checkAdd = dao.addYard(yard);
-//                    if(checkAdd){
-//                        request.setAttribute("YARD_INFO", yard);
-//                        url = ADD_SUCCESS;
-//                    }else{
-//                        yardError.setYardMessError("Cannot add this yard!");
-//                        request.setAttribute("YARD_ERROR", yardError);
-//                    }
-//                }
-//            }else{
-//                request.setAttribute("YARD_ERROR", yardError);
-//            }
+        String url = Error;
+        try  {
+            
         }catch(Exception ex){
             ex.printStackTrace();
         }finally{
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            request.getRequestDispatcher(url).forward(request, response);
             out.close();
         }
     }
