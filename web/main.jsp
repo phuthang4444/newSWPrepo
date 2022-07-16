@@ -72,7 +72,7 @@
             <div class="search_container">
                 <form class="search_form" action="MainServlet" method="POST">
                     <p>Tên Sân</p>
-                    <input type="text" id="date" name="dayChooser">
+                    <input type="text" id="date" name="yardName">
                     <input type="submit" value="Search" name="BTACTION" class="search_btn">
                     <c:if test="${requestScope.LIST_YARD!=null}" >
                         <c:if test="${not empty requestScope.LIST_YARD}">
@@ -108,7 +108,7 @@
                                 </tbody>
                             </table>
                         </c:if>
-                        <c:if test="${empty requestScope.LIST_BOOKED_YARD}">
+                        <c:if test="${empty requestScope.LIST_YARD}">
                             No Record Found!
                         </c:if>
                     </c:if>

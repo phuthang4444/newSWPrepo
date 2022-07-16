@@ -16,13 +16,13 @@ public class RegYard implements Serializable {
    private String yardName;
    private String userFullName;
    private String yardAddress;
-   private String yardDayPrice;
-   private String yardNightprice;
+   private int yardDayPrice;
+   private int yardNightprice;
 
     public RegYard() {
     }
 
-    public RegYard(String yardImage, String yardName, String userFullName, String yardAddress, String yardDayPrice, String yardNightprice) {
+    public RegYard(String yardImage, String yardName, String userFullName, String yardAddress, int yardDayPrice, int yardNightprice) {
         this.yardImage = yardImage;
         this.yardName = yardName;
         this.userFullName = userFullName;
@@ -63,22 +63,21 @@ public class RegYard implements Serializable {
         this.yardAddress = yardAddress;
     }
 
-    public String getYardDayPrice() {
+    public int getYardDayPrice() {
         return yardDayPrice;
     }
 
-    public void setYardDayPrice(String yardDayPrice) {
+    public void setYardDayPrice(int yardDayPrice) {
         this.yardDayPrice = yardDayPrice;
     }
 
-    public String getYardNightprice() {
+    public int getYardNightprice() {
         return yardNightprice;
     }
 
-    public void setYardNightprice(String yardNightprice) {
+    public void setYardNightprice(int yardNightprice) {
         this.yardNightprice = yardNightprice;
     }
 
-    
     
 }

@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "SearchBookedYardServlet", urlPatterns = {"/SearchBookedYardServlet"})
 public class SearchBookedYardServlet extends HttpServlet {
-private final String Error = "login.jsp";
+private final String Error = "main.jsp";
 private final String Success = "main.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,6 +40,7 @@ private final String Success = "main.jsp";
         String url = Error;
         try {
             String search = request.getParameter("yardName");
+            System.out.println(search);
             RegDAO dao = new RegDAO();
             List<RegYard> list = dao.searchYardByName(search);
             if(!list.isEmpty()){

@@ -174,25 +174,27 @@ public class RegDAO implements Serializable {
     public List<RegYard> searchYardByName(String search) throws SQLException {
         List<RegYard> list = new ArrayList<>();
         try {
+            
             con = DBHelpers.makeConnection();
             String sql = "Select YardImage, YardName, [User].Name, Address, NightPrice, DayPrice "
                     + "From Yard "
                     + "INNER JOIN [User] ON Yard.UserId  = [User].Id "
                     + "Where YardName like ?";
             stm = con.prepareStatement(sql);
-            stm.setString(1, search);
+            stm.setString(1,"%" +search +"%");
             rs = stm.executeQuery();
             while (rs.next()) {
+                
                 String yardName = rs.getString("YardName");
                 String yardImage = rs.getString("YardImage");
                 String userFullName = rs.getString("Name");
                 String yardAddress = rs.getString("Address");
                 int yardDayPrice = rs.getInt("DayPrice");
                 int yardNightPrice = rs.getInt("NightPrice");
-                list.add(new RegYard(yardImage, yardName, userFullName, yardAddress, yardAddress, yardImage));
+                list.add(new RegYard(yardImage, yardName, userFullName, yardAddress, yardDayPrice, yardNightPrice));
             }
         } catch (Exception ex) {
-
+            ex.printStackTrace();
         } finally {
             CloseAll();
         }
